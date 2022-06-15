@@ -9,10 +9,17 @@ function App() {
   const [wings, setWings] = useState('mild');
   const [side, setSide] = useState('fries');
   const [orderName, setOrderName] = useState('');
+
   const [instructions, setInstructions] = useState([]);
+  const [currentInstructions, setCurrentInstructions] = useState('');
 
 
+  function handleSubmit(e) {
+    e.preventDefault();
 
+    setInstructions([...instructions, currentInstructions]);
+
+  }
 
 
   return (
@@ -52,6 +59,20 @@ function App() {
             </select>
           </label>
 
+          <div>
+            <label> 
+              Name For Order:
+              <input onChange={e => setOrderName(e.target.value)}/>
+            </label>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <label>
+              Add Instructions:
+              <input onChange={e => setCurrentInstructions(e.target.value)} />
+            </label>
+            <button>submit</button>
+          </form>
           <hr />
 
 
@@ -61,8 +82,9 @@ function App() {
           <h3>Name for order: {orderName}</h3>
           <div><h3>Special instructions</h3>
             <ul>
-              <li>Orange Slice</li>
-              <li>Salt</li>
+              {
+                instructions.map((instruction, i) => <li key={instruction + i}>{instruction}</li>)
+              }
             </ul>
           </div>
         </div>
