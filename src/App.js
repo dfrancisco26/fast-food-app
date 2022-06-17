@@ -1,5 +1,10 @@
 import './App.css';
 import { useState } from 'react';
+import Beer from './Beer.js';
+import Wings from './Wings.js';
+import Side from './Side.js';
+import InstructionsList from './InstructionsList';
+import InstructionsForm from './InstructionsForm';
 function App() {
 
 
@@ -10,7 +15,7 @@ function App() {
   const [side, setSide] = useState('fries');
   const [orderName, setOrderName] = useState('');
 
-  const [instructions, setInstructions] = useState([]);
+  const [instructions, setInstructions] = useState(['yes', 'no']);
   const [currentInstructions, setCurrentInstructions] = useState('');
 
 
@@ -31,33 +36,9 @@ function App() {
       <section>
         Your Order
         <div>
-          <label>
-            Beer
-            <select onChange={(event) => setBeer(event.target.value)}>
-              <option>MangoCart</option>
-              <option>Trippel</option>
-              <option>BlueMoon</option>
-              <option>Corona</option>
-            </select>
-          </label>
-          <label>
-            Wings
-            <select onChange={(event) => setWings(event.target.value)}>
-              <option>Mild</option>
-              <option>Medium</option>
-              <option>Hot</option>
-              <option>Oof</option>
-            </select>
-          </label>
-          <label>
-            Side
-            <select onChange={(event) => setSide(event.target.value)}>
-              <option>Fries</option>
-              <option>Veggies</option>
-              <option>Rings</option>
-              <option>Sticks</option>
-            </select>
-          </label>
+          <Beer setBeer={setBeer} />
+          <Wings setWings={setWings} />
+          <Side setSide={setSide} />
 
           <div>
             <label> 
@@ -65,14 +46,7 @@ function App() {
               <input onChange={e => setOrderName(e.target.value)}/>
             </label>
           </div>
-
-          <form onSubmit={handleSubmit}>
-            <label>
-              Add Instructions:
-              <input onChange={e => setCurrentInstructions(e.target.value)} />
-            </label>
-            <button>submit</button>
-          </form>
+          <InstructionsForm handleSubmit={handleSubmit} setCurrentInstructions={setCurrentInstructions} />
           <hr />
 
 
@@ -81,11 +55,7 @@ function App() {
           <img src={`${side}.jpg`} />
           <h3>Name for order: {orderName}</h3>
           <div><h3>Special instructions</h3>
-            <ul>
-              {
-                instructions.map((instruction, i) => <li key={instruction + i}>{instruction}</li>)
-              }
-            </ul>
+            <InstructionsList instructions={instructions} />
           </div>
         </div>
       </section>
